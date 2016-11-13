@@ -1,0 +1,12 @@
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\bin\Debug\test2project.exe.config
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\bin\Debug\test2project.exe
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\bin\Debug\test2project.pdb
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\obj\Debug\test2project.Form1.resources
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\obj\Debug\test2project.login.resources
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\obj\Debug\test2project.Properties.Resources.resources
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\obj\Debug\test2project.csproj.GenerateResource.Cache
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\obj\Debug\test2project.exe
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\obj\Debug\test2project.pdb
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\bin\Debug\Newtonsoft.Json.dll
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\bin\Debug\Newtonsoft.Json.xml
+c:\users\6950\documents\visual studio 2015\Projects\test2project\test2project\obj\Debug\test2project.csprojResolveAssemblyReference.cache
