@@ -15,26 +15,32 @@ namespace test2project
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(string loginst, string pass)
         {
             InitializeComponent();
+            Player newplayer = new Player(loginst, pass);
         }
 
 
-        public class Candy
+        public class Player
         {
-        
+            string playerlogin;
+            string password;
+            public Player(string asdf, string gfasdg) { this.playerlogin = asdf; this.password = gfasdg; }
+            public void printplayer() { System.Diagnostics.Debug.Write(playerlogin); }
+            public string getlogin() { return playerlogin; }
+            public string getpass() { return password; }
         }
 
         public class board
         {
             
-            int[] myboard = new int[16];
+            int[] myboard = new int[32];
             public board(int[] board)
             {
                 //int[,] myboard = new int[4,4];
 
-                for (int i = 0; i < 16; i++)
+                for (int i = 0; i < 32; i++)
                 {
                         myboard[i] = board[i];
                                  }//init board loop
@@ -42,12 +48,12 @@ namespace test2project
 
             public void printBoard()
             {
-                for (int i = 0; i < 16; i++)
+                for (int i = 0; i < 32; i++)
                 {
                     
                         System.Diagnostics.Debug.Write(myboard[i]);
 
-                    if (i%4==3 )
+                    if (i%8==7 )
                     System.Diagnostics.Debug.WriteLine("");
                 }//init board loop
 
@@ -64,9 +70,11 @@ namespace test2project
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            string urlstring = "http://52.24.237.185/login?user=";
 
+            //urlstring +=
             
-            
+
             WebClient client = new WebClient();
             Stream stream = client.OpenRead("http://52.24.237.185/login?user=test&pass=test123123");
             StreamReader reader = new StreamReader(stream);
@@ -80,26 +88,39 @@ namespace test2project
 
 
             stream.Close();
-            int[] tempboard = new int[16];
+            int[] tempboard = new int[32];
             
 
-            for (int i=0; i<16; i++)
+            for (int i=0; i<32; i++)
             {
                 tempboard[i] = (int)jObject.Root["Board"][i];
 
             }
 
+
             
- 
 
             board gameboard = new board(tempboard);
-            gameboard.printBoard();
+            //test printing
+            //gameboard.printBoard();
 
             Button[] buttons = this.Controls.OfType<Button>().ToArray();
+            int tempbutton = 0;
 
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 32; i++)
             {
-                buttons[i].Text = ""+gameboard.getvalue(i);
+                tempbutton = gameboard.getvalue(i);
+                buttons[i].Text = ""+tempbutton;
+
+                if (tempbutton==1)
+                                buttons[i].BackgroundImage = new Bitmap(@"d:\class\candy1.bmp");;
+                if (tempbutton == 2)
+                    buttons[i].BackgroundImage = new Bitmap(@"d:\class\candy2.bmp"); ;
+                if (tempbutton == 3)
+                    buttons[i].BackgroundImage = new Bitmap(@"d:\class\candy3.bmp"); ;
+                if (tempbutton == 4)
+                    buttons[i].BackgroundImage = new Bitmap(@"d:\class\candy4.bmp"); ;
+
             }
 
 
