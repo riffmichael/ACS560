@@ -20,7 +20,7 @@ const (
 type player struct{
 	Login, Password string
 	Score int 
-	Board [32]int
+	Board [64]int
 }
 
 func (p *player) getPlayerLogin() string {
@@ -35,7 +35,7 @@ func (p *player) getPlayerScore() int {
 	return p.Score
 }
 
-func (p *player) getBoard() [32]int {
+func (p *player) getBoard() [64]int {
 	return p.Board
 }
 
@@ -48,8 +48,46 @@ func closeDBCconnection(datastuffs *sql.DB) {
 	datastuffs.Close()
 }
 
+func createDBtable(datastuffs *sql.DB) {
 
-func  pullboard(datastuffs *sql.DB) [32]int {
+        datastuffs.Close()
+}
+
+func instertDBrow(datastuffs *sql.DB) {
+
+        datastuffs.Close()
+}
+
+func ReadDBtable(datastuffs *sql.DB, attribute string, table string) {
+        var value string
+	query := "SELECT "
+	query += attribute + " FROM " + table
+	
+        rows1, err1 := datastuffs.Query(query)
+        checkErr(err1)
+
+        for rows1.Next() {
+                err1 = rows1.Scan(&value)
+                checkErr(err1)
+        }
+
+	datastuffs.Close()
+}
+
+func updateDBrow(datastuffs *sql.DB) {
+
+        datastuffs.Close()
+}
+
+func deleteDBrow(datastuffs *sql.DB) {
+
+        datastuffs.Close()
+}
+
+
+
+
+func  pullboard(datastuffs *sql.DB) [64]int {
         var value string
 	rows1, err1 := datastuffs.Query("SELECT value FROM boards where id=1")
     	checkErr(err1)
@@ -59,7 +97,7 @@ func  pullboard(datastuffs *sql.DB) [32]int {
         	checkErr(err1)
 	}
 
-	var someboard = [32] int {}
+	var someboard = [64] int {}
 	var dummyint64 int64
    	boardvalues := strings.Split(value, ",")
 
