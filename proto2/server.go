@@ -240,6 +240,6 @@ func main() {
 	http.HandleFunc("/login", loginServer)
 	http.HandleFunc("/new", createUser)
 	http.HandleFunc("/nextBoard", getNextBoard)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":80", nil)
 
 }
