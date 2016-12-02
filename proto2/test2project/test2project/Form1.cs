@@ -133,24 +133,24 @@ namespace test2project {
 
         private void Form1_Load(object sender, EventArgs e) {
 
-            
 
-            string urlstring = "http://52.24.237.185/"+newPlayer.getOperation().ToString()+"?user=" + newPlayer.getlogin() + "&pass=" + newPlayer.getpass();
-            
+
+            string urlstring = "http://52.24.237.185/" + newPlayer.getOperation().ToString() + "?user=" + newPlayer.getlogin() + "&pass=" + newPlayer.getpass();
+
             //urlstring +=
-            
+
 
             WebClient client = new WebClient();
             Stream stream = client.OpenRead(urlstring);
             StreamReader reader = new StreamReader(stream);
 
             Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JObject.Parse(reader.ReadLine());
-            
+
 
             // instead of WriteLine, 2 or 3 lines of code here using WebClient to download the file
 
-
-            System.Diagnostics.Debug.WriteLine(jObject.First.ToString().Substring(1,5));
+            System.Diagnostics.Debug.WriteLine(urlstring);
+            System.Diagnostics.Debug.WriteLine(jObject.First.ToString().Substring(1, 5));
 
 
             stream.Close();
@@ -219,9 +219,12 @@ namespace test2project {
 
                 }//end for
             }//end json error block
-            this.Close();
-            MessageBox.Show("Bad user name or password");
+            else
+            {
 
+                this.Close();
+                MessageBox.Show("Bad user name or password");
+            }
         }//end form 1 load method
         
         //for Login button..
