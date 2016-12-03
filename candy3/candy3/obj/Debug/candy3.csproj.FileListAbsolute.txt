@@ -1,0 +1,10 @@
+D:\tmp\candy3\candy3\bin\Debug\candy3.exe.config
+D:\tmp\candy3\candy3\bin\Debug\candy3.exe
+D:\tmp\candy3\candy3\bin\Debug\candy3.pdb
+D:\tmp\candy3\candy3\obj\Debug\candy3.csprojResolveAssemblyReference.cache
+D:\tmp\candy3\candy3\obj\Debug\candy3.login.resources
+D:\tmp\candy3\candy3\obj\Debug\candy3.Properties.Resources.resources
+D:\tmp\candy3\candy3\obj\Debug\candy3.csproj.GenerateResource.Cache
+D:\tmp\candy3\candy3\obj\Debug\candy3.exe
+D:\tmp\candy3\candy3\obj\Debug\candy3.pdb
+D:\tmp\candy3\candy3\obj\Debug\candy3.game.resources
