@@ -8,3 +8,5 @@ D:\tmp\candy3\candy3\obj\Debug\candy3.csproj.GenerateResource.Cache
 D:\tmp\candy3\candy3\obj\Debug\candy3.exe
 D:\tmp\candy3\candy3\obj\Debug\candy3.pdb
 D:\tmp\candy3\candy3\obj\Debug\candy3.game.resources
+D:\tmp\candy3\candy3\bin\Debug\Newtonsoft.Json.dll
+D:\tmp\candy3\candy3\bin\Debug\Newtonsoft.Json.xml

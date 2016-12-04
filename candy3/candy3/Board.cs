@@ -44,7 +44,7 @@ namespace candy3
 
         }//end printBoard method
 
-        public Board(Candy[] board)
+        public Board(Int64[] board)
         {
 
             setCandySize(64);
@@ -53,7 +53,7 @@ namespace candy3
 
             for (int i = 0; i < candySize; i++)
             {
-                newCandies[i] = new Candy(0, false, i);
+                newCandies[i] = new Candy((int)board[i], false, i);
                 System.Diagnostics.Debug.Write(newCandies[i].getLocation()+" ");
 
                 if (i % 8 == 7) { System.Diagnostics.Debug.WriteLine(""); }
