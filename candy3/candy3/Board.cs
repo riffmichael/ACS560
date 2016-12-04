@@ -11,10 +11,25 @@ namespace candy3
 
         public static int candySize;
 
-        public static int getCandySize() { return candySize; }
+        public  int getCandySize() { return candySize; }
         public void setCandySize(int size) { Board.candySize = size; }
 
         public static Candy[] newCandies;
+
+        public bool ismatch(Candy candy1, Candy candy2) {
+            if (candy1.getValue() == candy2.getValue())
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
+        public Candy getCandy(int i)
+        {
+            return newCandies[i].getCandy();
+        }
 
         public static void printBoard()
         {

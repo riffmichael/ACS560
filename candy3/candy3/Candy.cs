@@ -18,6 +18,11 @@ namespace candy3
             this.location = location;
         }
 
+        public Candy getCandy()
+        {
+            return this;
+        }
+
         public bool isClick()
         {
             return this.isClicked;
