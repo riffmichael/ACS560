@@ -8,6 +8,18 @@ namespace candy3
 {
     public class Board
     { //board class
+        public static int clickCount;
+        public int getClickCount()
+        {
+            return clickCount;
+        }
+
+        public void setClickCount(int size)
+        {
+            Board.clickCount = size;
+        }
+
+
         public static int candySize;
         public int getCandySize()
         {
@@ -46,6 +58,14 @@ namespace candy3
                     System.Diagnostics.Debug.WriteLine("");
             } //init board loop, end for loop
         } //end printBoard method
+
+        public Candy[] clearClicks(Candy[] clearBoard) {
+            for (int i = 0; i < candySize; i++)
+            {
+                newCandies[i].getCandy().setNotClicked();
+            }
+            return clearBoard;
+        }
 
         public Board(Int64[] board)
         {

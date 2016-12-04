@@ -18,6 +18,7 @@ namespace candy3
         public Player newPlayer;
         public Board newBoard;
         public Candy[] newCandies;
+        public int firstClick, secondClick;
         public static Button[] b = new Button[64];
         public game(string loginst, string pass, string indo)
         {
@@ -49,6 +50,7 @@ namespace candy3
 
                 Controls.Add(b[i]);
                 b[i].Text = newBoard.getCandy(i).getValue().ToString();
+                System.Console.WriteLine("button[" + i + "].Click += (sender1, ex) => gameStep("+i + ");");
             }
 
             setOnClick(b);
@@ -94,74 +96,107 @@ namespace candy3
                 this.newBoard = new Board(checkJson(connectServer()));
                 displayButtons(newBoard);
             }
+
         }
+
+        public void gameStep(int buttonNumber)
+        {
+            if (newBoard.getClickCount() == 0)
+            {
+                firstClick = buttonNumber;
+                System.Console.WriteLine("clicks: "+newBoard.getClickCount()+" firstClick: "+firstClick);
+                newBoard.setClickCount(newBoard.getClickCount() + 1);
+                //return buttonNumber;
+            }
+            else
+            {
+                secondClick = buttonNumber;
+                System.Console.WriteLine("clicks: " + newBoard.getClickCount() + " secondClick: " + secondClick);
+                System.Console.WriteLine("compare " + firstClick + " and " + secondClick);
+                
+
+                if (newBoard.ismatch(newBoard.getCandy(firstClick).getCandy(), newBoard.getCandy(secondClick).getCandy())) {
+                    System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() +":"+newBoard.getCandy(firstClick).getValue()+ " matches " + newBoard.getCandy(secondClick).getLocation()+":" + newBoard.getCandy(secondClick).getValue());
+                }
+
+                newBoard.clearClicks(newCandies);
+                newBoard.setClickCount(0);
+                //System.Console.WriteLine(newBoard.getClickCount());
+                firstClick = -1;
+                secondClick = -1;
+                //return buttonNumber;
+            }
+        }
+
 
         private Button[] setOnClick(Button[] button)
         {
-            button[0].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(0).getValue().ToString());
-            button[1].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(1).getValue().ToString());
-            button[2].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(2).getValue().ToString());
-            button[3].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(3).getValue().ToString());
-            button[4].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(4).getValue().ToString());
-            button[5].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(5).getValue().ToString());
-            button[6].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(6).getValue().ToString());
-            button[7].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(7).getValue().ToString());
-            button[8].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(8).getValue().ToString());
-            button[9].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(9).getValue().ToString());
-            button[10].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(10).getValue().ToString());
-            button[11].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(11).getValue().ToString());
-            button[12].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(12).getValue().ToString());
-            button[13].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(13).getValue().ToString());
-            button[14].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(14).getValue().ToString());
-            button[15].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(15).getValue().ToString());
-            button[16].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(16).getValue().ToString());
-            button[17].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(17).getValue().ToString());
-            button[18].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(18).getValue().ToString());
-            button[19].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(19).getValue().ToString());
-            button[20].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(20).getValue().ToString());
-            button[21].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(21).getValue().ToString());
-            button[22].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(22).getValue().ToString());
-            button[23].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(23).getValue().ToString());
-            button[24].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(24).getValue().ToString());
-            button[25].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(25).getValue().ToString());
-            button[26].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(26).getValue().ToString());
-            button[27].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(27).getValue().ToString());
-            button[28].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(28).getValue().ToString());
-            button[29].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(29).getValue().ToString());
-            button[30].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(30).getValue().ToString());
-            button[31].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(31).getValue().ToString());
-            button[32].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(32).getValue().ToString());
-            button[33].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(33).getValue().ToString());
-            button[34].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(34).getValue().ToString());
-            button[35].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(35).getValue().ToString());
-            button[36].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(36).getValue().ToString());
-            button[37].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(37).getValue().ToString());
-            button[38].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(38).getValue().ToString());
-            button[39].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(39).getValue().ToString());
-            button[40].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(40).getValue().ToString());
-            button[41].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(41).getValue().ToString());
-            button[42].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(42).getValue().ToString());
-            button[43].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(43).getValue().ToString());
-            button[44].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(44).getValue().ToString());
-            button[45].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(45).getValue().ToString());
-            button[46].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(46).getValue().ToString());
-            button[47].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(47).getValue().ToString());
-            button[48].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(48).getValue().ToString());
-            button[49].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(49).getValue().ToString());
-            button[50].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(50).getValue().ToString());
-            button[51].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(51).getValue().ToString());
-            button[52].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(52).getValue().ToString());
-            button[53].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(53).getValue().ToString());
-            button[54].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(54).getValue().ToString());
-            button[55].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(55).getValue().ToString());
-            button[56].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(56).getValue().ToString());
-            button[57].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(57).getValue().ToString());
-            button[58].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(58).getValue().ToString());
-            button[59].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(59).getValue().ToString());
-            button[60].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(60).getValue().ToString());
-            button[61].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(61).getValue().ToString());
-            button[62].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(62).getValue().ToString());
-            button[63].Click += (sender1, ex) => System.Console.WriteLine(newBoard.getCandy(63).getValue().ToString());
+
+
+            button[0].Click += (sender1, ex) => gameStep(0);
+            button[1].Click += (sender1, ex) => gameStep(1);
+            button[2].Click += (sender1, ex) => gameStep(2);
+            button[3].Click += (sender1, ex) => gameStep(3);
+            button[4].Click += (sender1, ex) => gameStep(4);
+            button[5].Click += (sender1, ex) => gameStep(5);
+            button[6].Click += (sender1, ex) => gameStep(6);
+            button[7].Click += (sender1, ex) => gameStep(7);
+            button[8].Click += (sender1, ex) => gameStep(8);
+            button[9].Click += (sender1, ex) => gameStep(9);
+            button[10].Click += (sender1, ex) => gameStep(10);
+            button[11].Click += (sender1, ex) => gameStep(11);
+            button[12].Click += (sender1, ex) => gameStep(12);
+            button[13].Click += (sender1, ex) => gameStep(13);
+            button[14].Click += (sender1, ex) => gameStep(14);
+            button[15].Click += (sender1, ex) => gameStep(15);
+            button[16].Click += (sender1, ex) => gameStep(16);
+            button[17].Click += (sender1, ex) => gameStep(17);
+            button[18].Click += (sender1, ex) => gameStep(18);
+            button[19].Click += (sender1, ex) => gameStep(19);
+            button[20].Click += (sender1, ex) => gameStep(20);
+            button[21].Click += (sender1, ex) => gameStep(21);
+            button[22].Click += (sender1, ex) => gameStep(22);
+            button[23].Click += (sender1, ex) => gameStep(23);
+            button[24].Click += (sender1, ex) => gameStep(24);
+            button[25].Click += (sender1, ex) => gameStep(25);
+            button[26].Click += (sender1, ex) => gameStep(26);
+            button[27].Click += (sender1, ex) => gameStep(27);
+            button[28].Click += (sender1, ex) => gameStep(28);
+            button[29].Click += (sender1, ex) => gameStep(29);
+            button[30].Click += (sender1, ex) => gameStep(30);
+            button[31].Click += (sender1, ex) => gameStep(31);
+            button[32].Click += (sender1, ex) => gameStep(32);
+            button[33].Click += (sender1, ex) => gameStep(33);
+            button[34].Click += (sender1, ex) => gameStep(34);
+            button[35].Click += (sender1, ex) => gameStep(35);
+            button[36].Click += (sender1, ex) => gameStep(36);
+            button[37].Click += (sender1, ex) => gameStep(37);
+            button[38].Click += (sender1, ex) => gameStep(38);
+            button[39].Click += (sender1, ex) => gameStep(39);
+            button[40].Click += (sender1, ex) => gameStep(40);
+            button[41].Click += (sender1, ex) => gameStep(41);
+            button[42].Click += (sender1, ex) => gameStep(42);
+            button[43].Click += (sender1, ex) => gameStep(43);
+            button[44].Click += (sender1, ex) => gameStep(44);
+            button[45].Click += (sender1, ex) => gameStep(45);
+            button[46].Click += (sender1, ex) => gameStep(46);
+            button[47].Click += (sender1, ex) => gameStep(47);
+            button[48].Click += (sender1, ex) => gameStep(48);
+            button[49].Click += (sender1, ex) => gameStep(49);
+            button[50].Click += (sender1, ex) => gameStep(50);
+            button[51].Click += (sender1, ex) => gameStep(51);
+            button[52].Click += (sender1, ex) => gameStep(52);
+            button[53].Click += (sender1, ex) => gameStep(53);
+            button[54].Click += (sender1, ex) => gameStep(54);
+            button[55].Click += (sender1, ex) => gameStep(55);
+            button[56].Click += (sender1, ex) => gameStep(56);
+            button[57].Click += (sender1, ex) => gameStep(57);
+            button[58].Click += (sender1, ex) => gameStep(58);
+            button[59].Click += (sender1, ex) => gameStep(59);
+            button[60].Click += (sender1, ex) => gameStep(60);
+            button[61].Click += (sender1, ex) => gameStep(61);
+            button[62].Click += (sender1, ex) => gameStep(62);
+            button[63].Click += (sender1, ex) => gameStep(63);
             return button;
         }
     }
