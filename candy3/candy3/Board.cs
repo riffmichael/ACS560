@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace candy3
 {
     public class Board
@@ -48,12 +49,21 @@ namespace candy3
         {
             Candy tempCandy = newCandies[firstCandy].getCandy();
 
-            newCandies[firstCandy] = newCandies[secondCandy];
-            newCandies[secondCandy] = tempCandy;
+            newCandies[firstCandy] = newCandies[secondCandy].getCandy();
+            newCandies[secondCandy] = tempCandy.getCandy();
             return newCandies;
 
 
         }
+
+        public bool isAdjacent(Candy candy1, Candy candy2)
+        {
+            if (candy1.getLocation() -1 == candy2.getLocation()) { return true; }
+            if (candy1.getLocation() + 1 == candy2.getLocation()) { return true; }
+            if ((candy1.getLocation()%8 == candy2.getLocation()%8)&& Math.Abs(candy1.getLocation() - candy2.getLocation())==8) { return true; }
+            return false;
+        }
+
 
         public Candy getCandy(int i)
         {
@@ -90,17 +100,8 @@ namespace candy3
         } //end board constructor
 
 
-/*
-        public Board(Int64[] board)
-        {
-            setCandySize(64);
-            newCandies = new Candy[getCandySize()];
-            for (int i = 0; i < candySize; i++)
-            {
-                newCandies[i] = new Candy((int)board[i], false, i);
-            }
-        } //end board constructor
-  */
+
+
     
     
     } //end board class

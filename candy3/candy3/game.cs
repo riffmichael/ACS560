@@ -28,6 +28,7 @@ namespace candy3
 
         private void displayButtons(Board newBoard)
         {
+            this.Controls.Clear();
             Point newLoc = new Point(5, 5);
             Button[] b = new Button[newBoard.getCandySize()];
             for (int i = 0; i < newBoard.getCandySize(); i++)
@@ -117,14 +118,25 @@ namespace candy3
                 System.Console.WriteLine("clicks: " + newBoard.getClickCount() + " secondClick: " + secondClick);
                 System.Console.WriteLine("swap " + firstClick + " and " + secondClick);
                 newBoard.getCandy(buttonNumber).setClicked();
+
+                if (newBoard.isAdjacent(newBoard.getCandy(firstClick), newBoard.getCandy(secondClick))) { 
+                    System.Console.WriteLine("isAdjacent");
+                    //System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
+                    newBoard.swapCandy(newBoard.getCandy(firstClick).getLocation(), newBoard.getCandy(secondClick).getLocation());
+                    //System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
+
+                }
+/*
                 System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
                 newBoard.swapCandy(newBoard.getCandy(firstClick).getLocation(), newBoard.getCandy(secondClick).getLocation());
                 System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
-                newBoard.clearClicks(newCandies);
+  */
+    
+    newBoard.clearClicks(newCandies);
                 newBoard.setClickCount(0);
+          
                 firstClick = -1;
                 secondClick = -1;
-                //Board newBoard2 = newBoard;
                 displayButtons(newBoard);
             }
         }
