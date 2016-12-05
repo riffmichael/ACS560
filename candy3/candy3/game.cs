@@ -81,17 +81,32 @@ namespace candy3
 
         public bool checkJson(Newtonsoft.Json.Linq.JObject jObject)
         {
-            if (jObject.First.ToString().Substring(1, 5) != "Error".ToString())
+            string errorString = "";
+            if (jObject.First.ToString().Substring(1, 5) == "Error".ToString())
             {
+                if (newPlayer.getOperation().ToString() == "login")
+                {
+                    errorString = "bad user name or password";
+                }
+
+                if (newPlayer.getOperation().ToString() == "new")
+                {
+                    errorString = "user: " + newPlayer.getLogin() + " already created";
+                }
+
+                this.Close();
+                MessageBox.Show(errorString);
+                return false;
+            }
+            else if (jObject.First.ToString().Substring(1, 5) == "Scores".ToString())
+            {
+                //print high scores
                 return true;
-            } //end good user/password
+            }
             else
             {
-                this.Close();
-                MessageBox.Show("Bad user name or password");
+                return true;
             }
-
-            return false;
         }
 
         private void game_Load(object sender, EventArgs e)
@@ -102,8 +117,6 @@ namespace candy3
                 displayButtons(newBoard);
             }
         }
-
-
 
         public void gameStep(int buttonNumber)
         {
@@ -116,21 +129,19 @@ namespace candy3
             }
             else
             {
-                
                 secondClick = buttonNumber;
                 System.Console.WriteLine("clicks: " + newBoard.getClickCount() + " secondClick: " + newBoard.getCandy(secondClick).getLocation());
                 newBoard.getCandy(buttonNumber).setClicked();
-                if (newBoard.isAdjacent(newBoard.getCandy(firstClick), newBoard.getCandy(secondClick))) { 
+                if (newBoard.isAdjacent(newBoard.getCandy(firstClick), newBoard.getCandy(secondClick)))
+                {
                     System.Console.WriteLine("isAdjacent");
                     newBoard.swapCandy(newBoard.getCandy(firstClick).getLocation(), newBoard.getCandy(secondClick).getLocation());
                     newBoard.getCandy(firstClick).setLocation(firstClick);
                     newBoard.getCandy(secondClick).setLocation(secondClick);
                 }
 
-    
                 newBoard.clearClicks(newCandies);
                 newBoard.setClickCount(0);
-          
                 firstClick = -1;
                 secondClick = -1;
                 displayButtons(newBoard);
