@@ -19,7 +19,6 @@ namespace candy3
         public Board newBoard;
         public Candy[] newCandies;
         public int firstClick, secondClick;
-        public static Button[] b = new Button[64];
         public game(string loginst, string pass, string indo)
         {
             this.newPlayer = new Player(loginst, pass, indo);
@@ -30,7 +29,6 @@ namespace candy3
         private void displayButtons(Board newBoard)
         {
             Point newLoc = new Point(5, 5);
-            //Button[] b = Controls.OfType<Button>().OrderBy(button => button.TabIndex).ToArray();
             Button[] b = new Button[newBoard.getCandySize()];
             for (int i = 0; i < newBoard.getCandySize(); i++)
             {
@@ -50,7 +48,6 @@ namespace candy3
 
                 Controls.Add(b[i]);
                 b[i].Text = newBoard.getCandy(i).getValue().ToString();
-                System.Console.WriteLine("button[" + i + "].Click += (sender1, ex) => gameStep("+i + ");");
             }
 
             setOnClick(b);
@@ -68,17 +65,24 @@ namespace candy3
             return jObject;
         }
 
-        public Int64[] checkJson(Newtonsoft.Json.Linq.JObject jObject)
+        public Candy[] setupBoard(Newtonsoft.Json.Linq.JObject jObject)
+        {
+            Int64[] tempboard = new Int64[64];
+            Candy[] newCandies = new Candy[64];
+            for (int i = 0; i < tempboard.Length; i++)
+            {
+                tempboard[i] = (int)jObject.Root["Board"][i];
+                newCandies[i] = new Candy((int)tempboard[i], false, i);
+            } //end for loop
+
+            return newCandies;
+        }
+
+        public bool checkJson(Newtonsoft.Json.Linq.JObject jObject)
         {
             if (jObject.First.ToString().Substring(1, 5) != "Error".ToString())
             {
-                Int64[] tempboard = new Int64[64];
-                for (int i = 0; i < tempboard.Length; i++)
-                {
-                    tempboard[i] = (Int64)jObject.Root["Board"][i];
-                } //end for loop
-
-                return tempboard;
+                return true;
             } //end good user/password
             else
             {
@@ -86,17 +90,16 @@ namespace candy3
                 MessageBox.Show("Bad user name or password");
             }
 
-            return null;
+            return false;
         }
 
         private void game_Load(object sender, EventArgs e)
         {
-            if (checkJson(connectServer()) != null)
+            if (checkJson(connectServer()))
             {
-                this.newBoard = new Board(checkJson(connectServer()));
+                this.newBoard = new Board(setupBoard(connectServer()));
                 displayButtons(newBoard);
             }
-
         }
 
         public void gameStep(int buttonNumber)
@@ -104,35 +107,30 @@ namespace candy3
             if (newBoard.getClickCount() == 0)
             {
                 firstClick = buttonNumber;
-                System.Console.WriteLine("clicks: "+newBoard.getClickCount()+" firstClick: "+firstClick);
+                System.Console.WriteLine("clicks: " + newBoard.getClickCount() + " firstClick: " + firstClick);
                 newBoard.setClickCount(newBoard.getClickCount() + 1);
-                //return buttonNumber;
+                newBoard.getCandy(buttonNumber).setClicked();
             }
             else
             {
                 secondClick = buttonNumber;
                 System.Console.WriteLine("clicks: " + newBoard.getClickCount() + " secondClick: " + secondClick);
-                System.Console.WriteLine("compare " + firstClick + " and " + secondClick);
-                
-
-                if (newBoard.ismatch(newBoard.getCandy(firstClick).getCandy(), newBoard.getCandy(secondClick).getCandy())) {
-                    System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() +":"+newBoard.getCandy(firstClick).getValue()+ " matches " + newBoard.getCandy(secondClick).getLocation()+":" + newBoard.getCandy(secondClick).getValue());
-                }
-
+                System.Console.WriteLine("swap " + firstClick + " and " + secondClick);
+                newBoard.getCandy(buttonNumber).setClicked();
+                System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
+                newBoard.swapCandy(newBoard.getCandy(firstClick).getLocation(), newBoard.getCandy(secondClick).getLocation());
+                System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
                 newBoard.clearClicks(newCandies);
                 newBoard.setClickCount(0);
-                //System.Console.WriteLine(newBoard.getClickCount());
                 firstClick = -1;
                 secondClick = -1;
-                //return buttonNumber;
+                //Board newBoard2 = newBoard;
+                displayButtons(newBoard);
             }
         }
 
-
         private Button[] setOnClick(Button[] button)
         {
-
-
             button[0].Click += (sender1, ex) => gameStep(0);
             button[1].Click += (sender1, ex) => gameStep(1);
             button[2].Click += (sender1, ex) => gameStep(2);

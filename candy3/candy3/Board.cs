@@ -44,10 +44,22 @@ namespace candy3
             }
         }
 
+        public Candy[] swapCandy(int firstCandy, int secondCandy)
+        {
+            Candy tempCandy = newCandies[firstCandy].getCandy();
+
+            newCandies[firstCandy] = newCandies[secondCandy];
+            newCandies[secondCandy] = tempCandy;
+            return newCandies;
+
+
+        }
+
         public Candy getCandy(int i)
         {
             return newCandies[i].getCandy();
         }
+
 
         public static void printBoard()
         {
@@ -67,6 +79,18 @@ namespace candy3
             return clearBoard;
         }
 
+        public Board(Candy[] board)
+        {
+            setCandySize(64);
+            newCandies = new Candy[getCandySize()];
+            for (int i = 0; i < candySize; i++)
+            {
+                newCandies[i] = new Candy((int)board[i].getCandy().getValue(), false, i);
+            }
+        } //end board constructor
+
+
+/*
         public Board(Int64[] board)
         {
             setCandySize(64);
@@ -76,5 +100,8 @@ namespace candy3
                 newCandies[i] = new Candy((int)board[i], false, i);
             }
         } //end board constructor
+  */
+    
+    
     } //end board class
 }

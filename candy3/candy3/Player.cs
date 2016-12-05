@@ -11,6 +11,7 @@ namespace candy3
         string playerlogin;
         string password;
         string operation;
+        int score;
 
         public Player(string newLogin, string newPassword, string indo)
         {
@@ -23,6 +24,17 @@ namespace candy3
         {
             System.Diagnostics.Debug.Write(playerlogin);
         }
+
+        public int getScore()
+        {
+            return this.score;
+        }
+
+        public void setScore(int inScore)
+        {
+            this.score = inScore;
+        }
+
 
         public string getOperation()
         {
