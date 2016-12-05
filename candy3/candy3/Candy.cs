@@ -11,11 +11,13 @@ namespace candy3
         int cValue;
         bool isClicked;
         int location;
-        public Candy(int cValue, bool isClicked, int location)
+        bool clear;
+        public Candy(int cValue, bool isClicked, int location, bool clear)
         {
             this.cValue = cValue;
             this.isClicked = isClicked;
             this.location = location;
+            this.clear = clear;
         }
 
         public Candy getCandy()
@@ -56,6 +58,20 @@ namespace candy3
         public int getValue()
         {
             return this.cValue;
+        }
+
+        public bool getClear()
+        {
+            return this.clear;
+        }
+
+        public void setClear()
+        {
+            this.clear = true;
+        }
+        public void setUnClear()
+        {
+            this.clear = false;
         }
     } //class candy
 }

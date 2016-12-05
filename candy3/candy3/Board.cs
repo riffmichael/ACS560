@@ -102,7 +102,7 @@ namespace candy3
             newCandies = new Candy[getCandySize()];
             for (int i = 0; i < candySize; i++)
             {
-                newCandies[i] = new Candy((int)board[i].getCandy().getValue(), false, i);
+                newCandies[i] = new Candy((int)board[i].getCandy().getValue(), false, i, false);
             }
         } //end board constructor
     } //end board class

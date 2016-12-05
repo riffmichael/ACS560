@@ -19,6 +19,7 @@ namespace candy3
         public Board newBoard;
         public Candy[] newCandies;
         public int firstClick, secondClick;
+        public Button[] b;
         public game(string loginst, string pass, string indo)
         {
             this.newPlayer = new Player(loginst, pass, indo);
@@ -30,7 +31,7 @@ namespace candy3
         {
             this.Controls.Clear();
             Point newLoc = new Point(5, 5);
-            Button[] b = new Button[newBoard.getCandySize()];
+            this.b = new Button[newBoard.getCandySize()];
             for (int i = 0; i < newBoard.getCandySize(); i++)
             {
                 b[i] = new Button();
@@ -49,6 +50,7 @@ namespace candy3
 
                 Controls.Add(b[i]);
                 b[i].Text = newBoard.getCandy(i).getValue().ToString();
+                if (newBoard.getCandy(i).getClear()) { b[i].Visible = false; }
             }
 
             setOnClick(b);
@@ -73,11 +75,55 @@ namespace candy3
             for (int i = 0; i < tempboard.Length; i++)
             {
                 tempboard[i] = (int)jObject.Root["Board"][i];
-                newCandies[i] = new Candy((int)tempboard[i], false, i);
+                newCandies[i] = new Candy((int)tempboard[i], false, i, false);
             } //end for loop
 
             return newCandies;
         }
+
+        public void removeButton(int i) { this.b[i].Visible = false; }
+
+        public void checkMatches()
+        {
+            
+            int matchingValue = -1;
+ 
+            System.Console.WriteLine("Matches");
+            matchingValue = -1;
+            int nummatches = 1;
+
+            for (int j = 0; j < 8; j++)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+
+                    int loc = i + (j * 8);
+
+                    if (matchingValue == newBoard.getCandy(loc).getValue()) { nummatches++; }
+                    else
+                    {
+
+                        matchingValue = newBoard.getCandy(loc).getValue();
+                        nummatches = 1;
+                    }
+
+                    System.Console.WriteLine("location: " + newBoard.getCandy(loc).getLocation() + " value: " + newBoard.getCandy(loc).getValue() + " matches: " + nummatches);
+                    if ((nummatches == 3)) {
+                        System.Console.WriteLine("remove matches");
+                        //removeButton(loc);
+                        for (int k = loc; k > loc - 3; k--)
+                        {
+                            newBoard.getCandy(k).setClear();
+                            newPlayer.setScore(newPlayer.getScore() + newBoard.getCandy(k).getValue());
+                        }
+                    }
+                }//i
+                System.Console.WriteLine("end row: "+j);
+            }//j
+
+            System.Console.WriteLine("new score: " + newPlayer.getScore());
+       }
+
 
         public bool checkJson(Newtonsoft.Json.Linq.JObject jObject)
         {
@@ -138,6 +184,7 @@ namespace candy3
                     newBoard.swapCandy(newBoard.getCandy(firstClick).getLocation(), newBoard.getCandy(secondClick).getLocation());
                     newBoard.getCandy(firstClick).setLocation(firstClick);
                     newBoard.getCandy(secondClick).setLocation(secondClick);
+                    checkMatches();
                 }
 
                 newBoard.clearClicks(newCandies);
@@ -150,12 +197,12 @@ namespace candy3
 
         private void button1_Click(object sender, EventArgs e)
         {
-            displayButtons(newBoard);
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-            displayButtons(newBoard);
+            
         }
 
         private Button[] setOnClick(Button[] button)
