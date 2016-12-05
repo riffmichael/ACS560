@@ -83,7 +83,7 @@ namespace candy3
 
         public void removeButton(int i) { this.b[i].Visible = false; }
 
-        public void checkMatches()
+        public void checkMatchesHor()
         {
             
             int matchingValue = -1;
@@ -98,6 +98,7 @@ namespace candy3
                 {
 
                     int loc = i + (j * 8);
+                    if (i == 0) { nummatches = 0; }
 
                     if (matchingValue == newBoard.getCandy(loc).getValue()) { nummatches++; }
                     else
@@ -124,7 +125,48 @@ namespace candy3
             System.Console.WriteLine("new score: " + newPlayer.getScore());
        }
 
+        public void checkMatchesVer()
+        {
 
+            int matchingValue = -1;
+
+            System.Console.WriteLine("Matches");
+            matchingValue = -1;
+            int nummatches = 1;
+
+            for (int j = 0; j < 8; j++)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+
+                    int loc = j + (i * 8);
+                    if (i == 0) { nummatches = 0; }
+
+                    if (matchingValue == newBoard.getCandy(loc).getValue()) { nummatches++; }
+                    else
+                    {
+
+                        matchingValue = newBoard.getCandy(loc).getValue();
+                        nummatches = 1;
+                    }
+
+                    System.Console.WriteLine("location: " + newBoard.getCandy(loc).getLocation() + " value: " + newBoard.getCandy(loc).getValue() + " matches: " + nummatches);
+                    if ((nummatches == 3))
+                    {
+                        System.Console.WriteLine("remove matches");
+                        //removeButton(loc);
+                        for (int k = 0; k <3 ; k++)
+                        {
+                            newBoard.getCandy(loc - (k * 8)).setClear();
+                            newPlayer.setScore(newPlayer.getScore() + newBoard.getCandy(loc-(k*8)).getValue());
+                        }
+                    }
+                }//i
+                System.Console.WriteLine("end col: " + j);
+            }//j
+
+            System.Console.WriteLine("new score: " + newPlayer.getScore());
+        }
         public bool checkJson(Newtonsoft.Json.Linq.JObject jObject)
         {
             string errorString = "";
@@ -184,7 +226,8 @@ namespace candy3
                     newBoard.swapCandy(newBoard.getCandy(firstClick).getLocation(), newBoard.getCandy(secondClick).getLocation());
                     newBoard.getCandy(firstClick).setLocation(firstClick);
                     newBoard.getCandy(secondClick).setLocation(secondClick);
-                    checkMatches();
+                    checkMatchesHor();
+                    checkMatchesVer();
                 }
 
                 newBoard.clearClicks(newCandies);
