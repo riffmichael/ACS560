@@ -103,42 +103,48 @@ namespace candy3
             }
         }
 
+
+
         public void gameStep(int buttonNumber)
         {
             if (newBoard.getClickCount() == 0)
             {
                 firstClick = buttonNumber;
-                System.Console.WriteLine("clicks: " + newBoard.getClickCount() + " firstClick: " + firstClick);
+                System.Console.WriteLine("clicks: " + newBoard.getClickCount() + " firstClick: " + newBoard.getCandy(firstClick).getLocation());
                 newBoard.setClickCount(newBoard.getClickCount() + 1);
                 newBoard.getCandy(buttonNumber).setClicked();
             }
             else
             {
+                
                 secondClick = buttonNumber;
-                System.Console.WriteLine("clicks: " + newBoard.getClickCount() + " secondClick: " + secondClick);
-                System.Console.WriteLine("swap " + firstClick + " and " + secondClick);
+                System.Console.WriteLine("clicks: " + newBoard.getClickCount() + " secondClick: " + newBoard.getCandy(secondClick).getLocation());
                 newBoard.getCandy(buttonNumber).setClicked();
-
                 if (newBoard.isAdjacent(newBoard.getCandy(firstClick), newBoard.getCandy(secondClick))) { 
                     System.Console.WriteLine("isAdjacent");
-                    //System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
                     newBoard.swapCandy(newBoard.getCandy(firstClick).getLocation(), newBoard.getCandy(secondClick).getLocation());
-                    //System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
-
+                    newBoard.getCandy(firstClick).setLocation(firstClick);
+                    newBoard.getCandy(secondClick).setLocation(secondClick);
                 }
-/*
-                System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
-                newBoard.swapCandy(newBoard.getCandy(firstClick).getLocation(), newBoard.getCandy(secondClick).getLocation());
-                System.Console.WriteLine(newBoard.getCandy(firstClick).getLocation() + " " + newBoard.getCandy(secondClick).getLocation());
-  */
+
     
-    newBoard.clearClicks(newCandies);
+                newBoard.clearClicks(newCandies);
                 newBoard.setClickCount(0);
           
                 firstClick = -1;
                 secondClick = -1;
                 displayButtons(newBoard);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            displayButtons(newBoard);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            displayButtons(newBoard);
         }
 
         private Button[] setOnClick(Button[] button)

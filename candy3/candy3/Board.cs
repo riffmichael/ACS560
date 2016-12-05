@@ -15,9 +15,9 @@ namespace candy3
             return clickCount;
         }
 
-        public void setClickCount(int size)
+        public void setClickCount(int count)
         {
-            Board.clickCount = size;
+            Board.clickCount = count;
         }
 
 
@@ -49,8 +49,19 @@ namespace candy3
         {
             Candy tempCandy = newCandies[firstCandy].getCandy();
 
+
+
             newCandies[firstCandy] = newCandies[secondCandy].getCandy();
+
+           // newCandies[firstCandy].getCandy().setLocation(newCandies[secondCandy].getCandy().getLocation());
+
+
+
             newCandies[secondCandy] = tempCandy.getCandy();
+            //newCandies[secondCandy].getCandy().setLocation(tempCandy.getCandy().getLocation());
+
+
+
             return newCandies;
 
 
@@ -58,9 +69,11 @@ namespace candy3
 
         public bool isAdjacent(Candy candy1, Candy candy2)
         {
+
             if (candy1.getLocation() -1 == candy2.getLocation()) { return true; }
             if (candy1.getLocation() + 1 == candy2.getLocation()) { return true; }
             if ((candy1.getLocation()%8 == candy2.getLocation()%8)&& Math.Abs(candy1.getLocation() - candy2.getLocation())==8) { return true; }
+
             return false;
         }
 
