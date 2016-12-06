@@ -50,7 +50,11 @@ namespace candy3
 
                 Controls.Add(b[i]);
                 b[i].Text = newBoard.getCandy(i).getValue().ToString();
-                if (newBoard.getCandy(i).getClear()) { b[i].Visible = false; }
+                if (newBoard.getCandy(i).getClear())
+                {
+                    b[i].BackColor = Color.Blue;
+                    b[i].Enabled = false;
+                }
             }
 
             setOnClick(b);
@@ -58,11 +62,14 @@ namespace candy3
 
         public Newtonsoft.Json.Linq.JObject connectServer()
         {
+            
             string urlstring = "http://52.24.237.185/" + newPlayer.getOperation().ToString() + "?user=" + newPlayer.getLogin() + "&pass=" + newPlayer.getPass();
+            //System.Console.WriteLine(urlstring);
             //urlstring +=
             WebClient client = new WebClient();
             Stream stream = client.OpenRead(urlstring);
             StreamReader reader = new StreamReader(stream);
+            //System.Console.WriteLine(urlstring);
             Newtonsoft.Json.Linq.JObject jObject = Newtonsoft.Json.Linq.JObject.Parse(reader.ReadLine());
             stream.Close();
             return jObject;
@@ -83,9 +90,9 @@ namespace candy3
 
         public void removeButton(int i) { this.b[i].Visible = false; }
 
-        public void checkMatchesHor()
+        public int checkMatchesHor()
         {
-            
+            int newMatches = 0;
             int matchingValue = -1;
  
             System.Console.WriteLine("Matches");
@@ -112,6 +119,7 @@ namespace candy3
                     if ((nummatches == 3)) {
                         System.Console.WriteLine("remove matches");
                         //removeButton(loc);
+                        newMatches++;
                         for (int k = loc; k > loc - 3; k--)
                         {
                             newBoard.getCandy(k).setClear();
@@ -123,11 +131,12 @@ namespace candy3
             }//j
 
             System.Console.WriteLine("new score: " + newPlayer.getScore());
+            return newMatches;
        }
 
-        public void checkMatchesVer()
+        public int checkMatchesVer()
         {
-
+            int newMatches = 0;
             int matchingValue = -1;
 
             System.Console.WriteLine("Matches");
@@ -155,6 +164,7 @@ namespace candy3
                     {
                         System.Console.WriteLine("remove matches");
                         //removeButton(loc);
+                        newMatches++;
                         for (int k = 0; k <3 ; k++)
                         {
                             newBoard.getCandy(loc - (k * 8)).setClear();
@@ -166,11 +176,22 @@ namespace candy3
             }//j
 
             System.Console.WriteLine("new score: " + newPlayer.getScore());
+            return newMatches;
         }
+
+
+
         public bool checkJson(Newtonsoft.Json.Linq.JObject jObject)
         {
+
+            
             string errorString = "";
-            if (jObject.First.ToString().Substring(1, 5) == "Error".ToString())
+
+            if (jObject.First.ToString().Substring(1, 5) != "Error".ToString())
+            {
+                return true;
+            }
+            else
             {
                 if (newPlayer.getOperation().ToString() == "login")
                 {
@@ -186,25 +207,22 @@ namespace candy3
                 MessageBox.Show(errorString);
                 return false;
             }
-            else if (jObject.First.ToString().Substring(1, 5) == "Scores".ToString())
-            {
-                //print high scores
-                return true;
-            }
-            else
-            {
-                return true;
-            }
         }
 
         private void game_Load(object sender, EventArgs e)
         {
             if (checkJson(connectServer()))
             {
+                //when we have a failed login then attempt to create a new user 
+                newPlayer.setOperation("login");
                 this.newBoard = new Board(setupBoard(connectServer()));
                 displayButtons(newBoard);
             }
+            
+            
         }
+
+
 
         public void gameStep(int buttonNumber)
         {
@@ -228,6 +246,7 @@ namespace candy3
                     newBoard.getCandy(secondClick).setLocation(secondClick);
                     checkMatchesHor();
                     checkMatchesVer();
+                    
                 }
 
                 newBoard.clearClicks(newCandies);

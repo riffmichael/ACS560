@@ -12,13 +12,26 @@ namespace candy3
         string password;
         string operation;
         int score;
+        int NumberMatches;
 
         public Player(string newLogin, string newPassword, string indo)
         {
             this.playerlogin = newLogin;
             this.password = newPassword;
             this.operation = indo;
+            this.NumberMatches = 0;
         }//end Player constructor
+
+        public void setNumberMatches(int matches)
+        {
+            this.NumberMatches = matches;
+        }
+
+        public int getNumberMatches()
+        {
+            return this.NumberMatches;
+        }
+
 
         public void printPlayer()
         {
@@ -35,6 +48,10 @@ namespace candy3
             this.score = inScore;
         }
 
+        public void setOperation(string inop)
+        {
+            this.operation = inop;
+        }
 
         public string getOperation()
         {
